@@ -117,9 +117,8 @@ export default function Home() {
             <span className="eyebrow-line" /> Season 2026 <span className="eyebrow-line" />
           </p>
           <h1 className="hero-h1">Pick Your <em>Top 4</em></h1>
-          <p className="hero-desc">
-            Who do you think will make it to the IPL 2026 playoffs?<br />
-            Select exactly 4 teams below and lock in your prediction.
+          <p className="hero-desc hindi-desc">
+            कृपया, अपने दोस्त की खुशी के लिए, अपनी <em>maturity</em> को एक तरफ रखके, कृपया जवाब दें।
           </p>
         </section>
 
@@ -138,7 +137,9 @@ export default function Home() {
                 {/* Row 1: Name chips */}
                 <div className="controls-name-row">
                   <span className="controls-label">Who Are You?</span>
-                  <div className="name-chips">
+                  
+                  {/* Desktop Chips */}
+                  <div className="name-chips name-chips-desktop">
                     {USERS.map(u => (
                       <button
                         key={u}
@@ -150,6 +151,21 @@ export default function Home() {
                         {u}
                       </button>
                     ))}
+                  </div>
+
+                  {/* Mobile Dropdown */}
+                  <div className="name-dropdown-mobile">
+                    <select
+                      className="stylish-select"
+                      value={username}
+                      onChange={(e) => setUsername(e.target.value)}
+                    >
+                      <option value="" disabled>Select your name...</option>
+                      {USERS.map(u => (
+                        <option key={u} value={u}>{u}</option>
+                      ))}
+                    </select>
+                    <div className="select-caret">▼</div>
                   </div>
                 </div>
 

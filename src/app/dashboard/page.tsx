@@ -51,8 +51,11 @@ export default function Dashboard() {
   const mostPicked = (() => {
     const freq: Record<string, number> = {};
     predictions.forEach(p => p.teams.forEach(t => { freq[t] = (freq[t]||0)+1; }));
-    const top = Object.entries(freq).sort((a,b) => b[1]-a[1])[0];
-    return top ? top[0] : '—';
+    if (Object.keys(freq).length === 0) return [] as string[];
+    const maxCount = Math.max(...Object.values(freq));
+    return Object.entries(freq)
+      .filter(([, count]) => count === maxCount)
+      .map(([team]) => team);
   })();
 
   return (
@@ -75,7 +78,7 @@ export default function Dashboard() {
             <span className="eyebrow-line" /> Live Results <span className="eyebrow-line" />
           </p>
           <h1 className="hero-h1">Predictions <em>Board</em></h1>
-          <p className="hero-desc">See who everyone is backing for the IPL 2026 playoffs.</p>
+          <p className="hero-desc hindi-desc">बहुत बहुत धन्यवाद, मेरे लिए <em>unmature</em> बनने के लिए</p>
         </div>
 
         {!loading && predictions.length > 0 && (
@@ -85,16 +88,22 @@ export default function Dashboard() {
               <div className="stat-label">Total Predictions</div>
             </div>
             <div className="stat-card">
-              <div className="stat-number" style={{ color: TEAM_COLORS[mostPicked] ?? 'var(--ipl-gold)' }}>
-                {mostPicked}
+              <div className="stat-most-picked">
+                {mostPicked.length === 0 ? (
+                  <span style={{ color: 'var(--ipl-gold)' }}>—</span>
+                ) : (
+                  mostPicked.map(team => (
+                    <span
+                      key={team}
+                      className="most-picked-chip"
+                      style={{ color: TEAM_COLORS[team] ?? 'var(--ipl-gold)', borderColor: `${TEAM_COLORS[team] ?? '#f5a623'}44` }}
+                    >
+                      {team}
+                    </span>
+                  ))
+                )}
               </div>
-              <div className="stat-label">Most Popular Pick</div>
-            </div>
-            <div className="stat-card">
-              <div className="stat-number" style={{ fontSize: '1.25rem' }}>
-                {predictions[predictions.length - 1]?.username ?? '—'}
-              </div>
-              <div className="stat-label">Latest Predictor</div>
+              <div className="stat-label">Most Popular Pick{mostPicked.length > 1 ? 's' : ''}</div>
             </div>
           </div>
         )}
@@ -128,11 +137,8 @@ export default function Dashboard() {
                     </div>
                     <div>
                       <div className="pred-name">{pred.username}</div>
-                      <div className="pred-time">{fmtDate(pred.timestamp)}</div>
+                      <div className="pred-time" suppressHydrationWarning>{fmtDate(pred.timestamp)}</div>
                     </div>
-                    {idx === predictions.length - 1 && (
-                      <div className="pred-badge">Latest</div>
-                    )}
                   </div>
                   <div className="pred-teams-row">
                     {pred.teams.map(team => (

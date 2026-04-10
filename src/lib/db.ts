@@ -27,14 +27,14 @@ export async function getPredictions() {
     'SELECT * FROM predictions ORDER BY timestamp DESC'
   );
   return result.rows.map(row => ({
-    id:        row.id,
-    username:  row.username,
-    teams:     JSON.parse(row.teams as string),
+    id: row.id,
+    username: row.username,
+    teams: JSON.parse(row.teams as string),
     timestamp: row.timestamp,
   }));
 }
 
-export async function upsertPrediction(username: string, teams: string[]) {
+export async function upsertPrediction(username: string, teams: string[], overrideTimestamp?: string) {
   await init();
   const existing = await client.execute({
     sql: 'SELECT id FROM predictions WHERE username = ?',
@@ -42,14 +42,28 @@ export async function upsertPrediction(username: string, teams: string[]) {
   });
 
   if (existing.rows.length > 0) {
-    await client.execute({
-      sql: 'UPDATE predictions SET teams = ?, timestamp = CURRENT_TIMESTAMP WHERE username = ?',
-      args: [JSON.stringify(teams), username],
-    });
+    if (overrideTimestamp) {
+      await client.execute({
+        sql: 'UPDATE predictions SET teams = ?, timestamp = ? WHERE username = ?',
+        args: [JSON.stringify(teams), overrideTimestamp, username],
+      });
+    } else {
+      await client.execute({
+        sql: 'UPDATE predictions SET teams = ?, timestamp = CURRENT_TIMESTAMP WHERE username = ?',
+        args: [JSON.stringify(teams), username],
+      });
+    }
   } else {
-    await client.execute({
-      sql: 'INSERT INTO predictions (username, teams) VALUES (?, ?)',
-      args: [username, JSON.stringify(teams)],
-    });
+    if (overrideTimestamp) {
+      await client.execute({
+        sql: 'INSERT INTO predictions (username, teams, timestamp) VALUES (?, ?, ?)',
+        args: [username, JSON.stringify(teams), overrideTimestamp],
+      });
+    } else {
+      await client.execute({
+        sql: 'INSERT INTO predictions (username, teams) VALUES (?, ?)',
+        args: [username, JSON.stringify(teams)],
+      });
+    }
   }
 }
