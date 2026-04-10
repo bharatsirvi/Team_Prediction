@@ -5,16 +5,16 @@ import Link from 'next/link';
 type Prediction = { id: number; username: string; teams: string[]; timestamp: string; };
 
 const TEAM_LOGOS: Record<string, string> = {
-  CSK:  "https://documents.iplt20.com/ipl/CSK/logos/Logooutline/CSKoutline.png",
-  DC:   "https://documents.iplt20.com/ipl/DC/Logos/LogoOutline/DCoutline.png",
-  GT:   "https://documents.iplt20.com/ipl/GT/Logos/Logooutline/GToutline.png",
-  LSG:  "https://documents.iplt20.com/ipl/LSG/Logos/Logooutline/LSGoutline.png",
-  MI:   "https://documents.iplt20.com/ipl/MI/Logos/Logooutline/MIoutline.png",
+  CSK: "https://documents.iplt20.com/ipl/CSK/logos/Logooutline/CSKoutline.png",
+  DC: "https://documents.iplt20.com/ipl/DC/Logos/LogoOutline/DCoutline.png",
+  GT: "https://documents.iplt20.com/ipl/GT/Logos/Logooutline/GToutline.png",
+  LSG: "https://documents.iplt20.com/ipl/LSG/Logos/Logooutline/LSGoutline.png",
+  MI: "https://documents.iplt20.com/ipl/MI/Logos/Logooutline/MIoutline.png",
   PBKS: "https://documents.iplt20.com/ipl/PBKS/Logos/Logooutline/PBKSoutline.png",
-  KKR:  "https://documents.iplt20.com/ipl/KKR/Logos/Logooutline/KKRoutline.png",
-  RCB:  "https://documents.iplt20.com/ipl/RCB/Logos/Logooutline/RCBoutline.png",
-  RR:   "https://documents.iplt20.com/ipl/RR/Logos/Logooutline/RRoutline.png",
-  SRH:  "https://documents.iplt20.com/ipl/SRH/Logos/Logooutline/SRHoutline.png",
+  KKR: "https://documents.iplt20.com/ipl/KKR/Logos/Logooutline/KKRoutline.png",
+  RCB: "https://documents.iplt20.com/ipl/RCB/Logos/Logooutline/RCBoutline.png",
+  RR: "https://documents.iplt20.com/ipl/RR/Logos/Logooutline/RRoutline.png",
+  SRH: "https://documents.iplt20.com/ipl/SRH/Logos/Logooutline/SRHoutline.png",
 };
 
 const TEAM_COLORS: Record<string, string> = {
@@ -23,16 +23,27 @@ const TEAM_COLORS: Record<string, string> = {
   RR: '#e91e8c', SRH: '#f26522',
 };
 
-const USER_GRADIENTS: Record<string, [string,string]> = {
-  Avirat:  ['#f5a623','#ff6b1a'],
-  Shaurya: ['#00c6ff','#0066ff'],
-  Devesh:  ['#a855f7','#6d28d9'],
-  Rajat:   ['#22c55e','#15803d'],
-  Sourabh: ['#f43f5e','#be123c'],
+const USER_GRADIENTS: Record<string, [string, string]> = {
+  Avirat: ['#f5a623', '#ff6b1a'],
+  Shaurya: ['#00c6ff', '#0066ff'],
+  Devesh: ['#a855f7', '#6d28d9'],
+  Rajat: ['#22c55e', '#15803d'],
+  Sourabh: ['#f43f5e', '#be123c'],
+  Piyush: ['#06b6d4', '#0891b2'],
+  Manish: ['#fb923c', '#ea580c'],
+  Bharat: ['#6366f1', '#4f46e5'],
+  Tarun: ['#ec4899', '#db2777'],
 };
 
 function fmtDate(ts: string) {
-  const d = new Date(ts);
+  // SQLite CURRENT_TIMESTAMP returns "YYYY-MM-DD HH:MM:SS" (UTC).
+  // We force a 'Z' to make sure JavaScript treats it as UTC for local conversion.
+  let dateStr = ts;
+  if (!ts.includes('Z') && !ts.includes('+')) {
+    dateStr = ts.replace(' ', 'T') + 'Z';
+  }
+  const d = new Date(dateStr);
+
   return d.toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' })
     + ' · ' + d.toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit' });
 }
@@ -50,7 +61,7 @@ export default function Dashboard() {
 
   const mostPicked = (() => {
     const freq: Record<string, number> = {};
-    predictions.forEach(p => p.teams.forEach(t => { freq[t] = (freq[t]||0)+1; }));
+    predictions.forEach(p => p.teams.forEach(t => { freq[t] = (freq[t] || 0) + 1; }));
     if (Object.keys(freq).length === 0) return [] as string[];
     const maxCount = Math.max(...Object.values(freq));
     return Object.entries(freq)
@@ -75,7 +86,7 @@ export default function Dashboard() {
         <div className="db-hero">
           <div className="hero-watermark">PICKS</div>
           <p className="hero-eyebrow">
-            <span className="eyebrow-line" /> Live Results <span className="eyebrow-line" />
+            <span className="eyebrow-line" /> Thank You <span className="eyebrow-line" />
           </p>
           <h1 className="hero-h1">Predictions <em>Board</em></h1>
           <p className="hero-desc hindi-desc">बहुत बहुत धन्यवाद, मेरे लिए <em>unmature</em> बनने के लिए</p>
@@ -125,7 +136,7 @@ export default function Dashboard() {
         ) : (
           <div className="pred-grid">
             {predictions.map((pred, idx) => {
-              const [g1, g2] = USER_GRADIENTS[pred.username] ?? ['#f5a623','#ff6b1a'];
+              const [g1, g2] = USER_GRADIENTS[pred.username] ?? ['#f5a623', '#ff6b1a'];
               return (
                 <div key={pred.id} className="pred-card">
                   <div className="pred-user-row">
@@ -152,7 +163,7 @@ export default function Dashboard() {
                           src={TEAM_LOGOS[team]}
                           alt={team}
                           className="pred-team-logo"
-                          onError={e => { (e.target as HTMLImageElement).style.display='none'; }}
+                          onError={e => { (e.target as HTMLImageElement).style.display = 'none'; }}
                         />
                         <div
                           className="pred-team-code"

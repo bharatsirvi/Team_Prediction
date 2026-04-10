@@ -65,6 +65,21 @@ export default function Home() {
   const [selectedTeams, setSelectedTeams] = useState<string[]>([]);
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
+  const [submittedUsers, setSubmittedUsers] = useState<string[]>([]);
+
+  // Fetch existing predictions to filter out users who already voted
+  React.useEffect(() => {
+    fetch('/api/predictions')
+      .then(res => res.json())
+      .then(data => {
+        if (Array.isArray(data)) {
+          setSubmittedUsers(data.map((p: any) => p.username));
+        }
+      })
+      .catch(err => console.error("Error fetching predictions:", err));
+  }, []);
+
+  const availableUsers = USERS.filter(u => !submittedUsers.includes(u));
 
   const toggleTeam = (id: string) => {
     if (selectedTeams.includes(id)) {
@@ -114,11 +129,11 @@ export default function Home() {
         <section className="hero">
           <div className="hero-watermark">TEAMS</div>
           <p className="hero-eyebrow">
-            <span className="eyebrow-line" /> Season 2026 <span className="eyebrow-line" />
+            <span className="eyebrow-line" /> Please Request<span className="eyebrow-line" />
           </p>
           <h1 className="hero-h1">Pick Your <em>Top 4</em></h1>
           <p className="hero-desc hindi-desc">
-            कृपया, अपने दोस्त की खुशी के लिए, अपनी <em>maturity</em> को एक तरफ रखके, कृपया जवाब दें।
+            कृपया, अपने दोस्त की खुशी के लिए, अपनी <em>maturity</em> को एक तरफ रखकर, जवाब दें।
           </p>
         </section>
 
@@ -137,10 +152,10 @@ export default function Home() {
                 {/* Row 1: Name chips */}
                 <div className="controls-name-row">
                   <span className="controls-label">Who Are You?</span>
-                  
+
                   {/* Desktop Chips */}
                   <div className="name-chips name-chips-desktop">
-                    {USERS.map(u => (
+                    {availableUsers.map(u => (
                       <button
                         key={u}
                         type="button"
@@ -161,7 +176,7 @@ export default function Home() {
                       onChange={(e) => setUsername(e.target.value)}
                     >
                       <option value="" disabled>Select your name...</option>
-                      {USERS.map(u => (
+                      {availableUsers.map(u => (
                         <option key={u} value={u}>{u}</option>
                       ))}
                     </select>
@@ -173,7 +188,7 @@ export default function Home() {
                 <div className="controls-counter-row">
                   <span className="counter-label">Teams Selected</span>
                   <div className="counter-pips">
-                    {[0,1,2,3].map(i => (
+                    {[0, 1, 2, 3].map(i => (
                       <div key={i} className={`pip${i < selectedTeams.length ? ' active' : ''}`} />
                     ))}
                   </div>
@@ -250,8 +265,8 @@ export default function Home() {
                   {!username
                     ? 'First, select your name above'
                     : selectedTeams.length < 4
-                    ? `Select ${4 - selectedTeams.length} more team${4 - selectedTeams.length !== 1 ? 's' : ''}`
-                    : '✓ Ready to lock in your prediction!'}
+                      ? `Select ${4 - selectedTeams.length} more team${4 - selectedTeams.length !== 1 ? 's' : ''}`
+                      : '✓ Ready to lock in your prediction!'}
                 </span>
                 <button
                   type="submit"

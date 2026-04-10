@@ -1,7 +1,7 @@
 // Seed script — inserts existing predictions into the database
 // Run with: node scripts/seed.mjs
 
-const BASE_URL = 'http://localhost:3000'; // Seeding local first
+const BASE_URL = 'https://team-prediction-beta.vercel.app';
 
 const predictions = [
   {
