@@ -102,9 +102,9 @@ export default function Home() {
 
   if (!sessionLoaded) {
     return (
-      <main className="page-main">
-        <div className="center-box"><div className="spinner" /></div>
-      </main>
+      <div className="full-page-loader">
+        <div className="spinner" />
+      </div>
     );
   }
 

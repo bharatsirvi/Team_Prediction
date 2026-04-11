@@ -16,10 +16,15 @@ export function Navbar() {
     const handleScroll = () => setIsScrolled(window.scrollY > 20);
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+  }, [pathname]); // re-fetch session on every navigation
+
+  // 🕵️‍♂️ Hide Header on Sign In page for a cleaner look (must be AFTER hooks)
+  if (pathname.startsWith('/sign-in')) return null;
 
   const handleSignOut = async () => {
-    await fetch('/api/auth/sign-out', { method: 'POST' });
+    await fetch('/api/auth/logout', { method: 'POST' });
+    setUser(null);
+    setShowMenu(false);
     router.push('/sign-in');
     router.refresh();
   };

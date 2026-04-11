@@ -7,7 +7,7 @@ const SECRET = new TextEncoder().encode(
 );
 const COOKIE = 'ipl_session';
 
-const PROTECTED_PATHS = ['/', '/dashboard'];
+const PROTECTED_PATHS = ['/', '/dashboard', '/points-table'];
 const PUBLIC_PATHS = ['/sign-in', '/api/', '/_next/', '/favicon.ico'];
 
 function isPublic(pathname: string) {
@@ -15,7 +15,7 @@ function isPublic(pathname: string) {
 }
 
 function isProtected(pathname: string) {
-  return PROTECTED_PATHS.includes(pathname);
+  return PROTECTED_PATHS.some(p => pathname === p || pathname.startsWith(p + '/'));
 }
 
 export async function proxy(request: NextRequest) {

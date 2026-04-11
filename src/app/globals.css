@@ -4190,3 +4190,14 @@ a.lock-btn {
     line-height: 1;
   }
 }
+
+/* FULL PAGE CENTERED LOADER */
+.full-page-loader {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: calc(100vh - 80px); /* Takes full height minus navbar */
+  width: 100%;
+  position: relative;
+  z-index: 1000;
+}
