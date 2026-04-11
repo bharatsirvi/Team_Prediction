@@ -3956,21 +3956,6 @@ a.lock-btn {
   box-shadow: 0 6px 20px rgba(79, 70, 229, 0.6);
 }
 
-.empty-ghost-stats {
-  display: flex;
-  gap: 15px;
-  margin-top: 50px;
-  opacity: 0.1;
-  width: 100%;
-  max-width: 800px;
-}
-
-.ghost-stat {
-  flex: 1;
-  height: 120px;
-  background: #fff;
-  border-radius: 16px;
-}
 
 @keyframes floatEmpty {
 
