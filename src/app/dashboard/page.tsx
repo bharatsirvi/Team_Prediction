@@ -57,7 +57,9 @@ export default function Dashboard() {
     const maxCount = Math.max(...Object.values(freq));
     return Object.entries(freq).filter(([, c]) => c === maxCount).map(([t]) => t);
   })();
-
+  if (loading) {
+    return <div className="full-page-loader"><div className="spinner" /></div>
+  }
   return (
     <>
       <main className="page-main">
@@ -67,7 +69,7 @@ export default function Dashboard() {
           <h1 className="hero-h1">Predictions <em>Board</em></h1>
         </div>
 
-        {loading ? <div className="center-box"><div className="spinner" /></div> : predictions.length === 0 ? (
+        {predictions.length === 0 ? (
           <div className="simple-empty-state">
             <div className="simple-empty-box">
               <h3>Bhai karde Please</h3>

@@ -194,7 +194,7 @@ export default function PointsTablePage() {
                     const isWin = match.winner === selectedTeam.teamId;
                     const isFinished = !!match.result;
                     const isNoResult = match.result?.toLowerCase().includes('no result');
-                    
+
                     return (
                       <div key={i} className={`timeline-item ${!isFinished ? 'upcoming' : ''}`}>
                         <div className="item-left">
