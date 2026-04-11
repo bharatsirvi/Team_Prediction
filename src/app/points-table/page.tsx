@@ -30,12 +30,19 @@ function fmtDt(ts: string) {
 export default function PointsTablePage() {
   const [pointsTable, setPointsTable] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
+  const [authLoading, setAuthLoading] = useState(true); // 🛡️ Standby for auth check
   const [user, setUser] = useState<any>(null);
   const [selectedTeam, setSelectedTeam] = useState<any>(null);
   const [showSheet, setShowSheet] = useState(false);
 
   useEffect(() => {
-    fetch('/api/auth/me').then(r => r.json()).then(d => setUser(d.user));
+    fetch('/api/auth/me')
+      .then(r => r.json())
+      .then(d => {
+        setUser(d.user);
+        setAuthLoading(false); // Auth check complete
+      })
+      .catch(() => setAuthLoading(false));
 
     fetch('/api/stats/points-table')
       .then(r => r.json())
@@ -64,7 +71,9 @@ export default function PointsTablePage() {
         </div>
 
         <div className="points-table-container">
-          {!user ? (
+          {authLoading ? (
+            <div className="center-box"><div className="spinner" /></div>
+          ) : !user ? (
             <div className="center-box auth-locked-box">
               <div className="lock-icon">🔒</div>
               <h3>Private Standings</h3>

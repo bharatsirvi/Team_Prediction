@@ -100,7 +100,13 @@ export default function Home() {
   const isSelected = (id: string) => selectedTeams.includes(id);
   const maxReached = selectedTeams.length >= 4;
 
-  if (!sessionLoaded) return null;
+  if (!sessionLoaded) {
+    return (
+      <main className="page-main">
+        <div className="center-box"><div className="spinner" /></div>
+      </main>
+    );
+  }
 
   const teamById = (id: string) => IPL_TEAMS.find(t => t.id === id);
 
