@@ -1,18 +1,21 @@
 import { NextResponse } from 'next/server';
 import { getPredictions, upsertPrediction } from '@/lib/db';
+import { getSession } from '@/lib/session';
 
 export async function POST(request: Request) {
   try {
-    const { username, teams, timestamp } = await request.json();
-
-    if (!username || !teams || !Array.isArray(teams) || teams.length !== 4) {
-      return NextResponse.json(
-        { error: 'Invalid data. Username and exactly 4 teams are required.' },
-        { status: 400 }
-      );
+    const session = await getSession();
+    if (!session) {
+      return NextResponse.json({ error: 'Unauthorized. Please sign in.' }, { status: 401 });
     }
 
-    await upsertPrediction(username, teams, timestamp);
+    const { teams, timestamp } = await request.json();
+
+    if (!teams || !Array.isArray(teams) || teams.length !== 4) {
+      return NextResponse.json({ error: 'Exactly 4 teams are required.' }, { status: 400 });
+    }
+
+    await upsertPrediction(session.name, teams, timestamp);
     return NextResponse.json({ success: true });
   } catch (error: unknown) {
     console.error('Database Error:', error);

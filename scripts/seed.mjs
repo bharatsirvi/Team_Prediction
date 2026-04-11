@@ -7,22 +7,22 @@ const predictions = [
   {
     username: 'Piyush',
     teams: ['MI', 'DC', 'PBKS', 'RCB'],
-    timestamp: '2026-04-04 17:13:00'
+    timestamp: '2026-04-04 11:43:00' // 5:13 PM IST
   },
   {
     username: 'Manish',
     teams: ['RCB', 'PBKS', 'DC', 'MI'],
-    timestamp: '2026-04-04 17:18:00'
+    timestamp: '2026-04-04 11:48:00' // 5:18 PM IST
   },
   {
     username: 'Bharat',
     teams: ['RR', 'RCB', 'MI', 'DC'],
-    timestamp: '2026-04-04 15:34:00'
+    timestamp: '2026-04-04 10:04:00' // 3:34 PM IST
   },
   {
     username: 'Tarun',
     teams: ['MI', 'RR', 'RCB', 'PBKS'],
-    timestamp: '2026-04-10 11:51:00'
+    timestamp: '2026-04-10 06:21:00' // 11:51 AM IST
   },
 ];
 
@@ -39,7 +39,7 @@ async function seed() {
     const json = await res.json();
 
     if (res.ok) {
-      console.log(`✅  ${p.username.padEnd(8)} → ${p.teams.join(', ')} (${p.timestamp})`);
+      console.log(`✅  ${p.username.padEnd(8)} → ${p.teams.join(', ')}`);
     } else {
       console.error(`❌  ${p.username}: ${JSON.stringify(json)}`);
     }
