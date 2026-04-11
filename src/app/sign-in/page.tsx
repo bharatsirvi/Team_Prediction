@@ -178,7 +178,7 @@ function SignInForm() {
               {error && <div className="signin-error">⚠ {error}</div>}
 
               <button type="submit" className="signin-btn" disabled={loading}>
-                {loading ? <span className="signin-spinner" /> : '📧 Send OTP to My Email'}
+                {loading ? <span className="signin-spinner" /> : 'Send OTP to My Email'}
               </button>
             </form>
           </>

@@ -708,7 +708,7 @@ h3 {
 ══════════════════════════════════════════════ */
 .db-hero {
   text-align: center;
-  padding: 52px 20px 36px;
+  padding: 36px 10px 10px;
   position: relative;
   overflow: hidden;
 }
@@ -2362,10 +2362,10 @@ a.lock-btn {
     left: 0;
     right: 0;
     height: 90px;
-    background: linear-gradient(to bottom, 
-      rgba(8, 15, 36, 1) 40%, 
-      rgba(8, 15, 36, 0.9) 70%, 
-      transparent 100%);
+    background: linear-gradient(to bottom,
+        rgba(8, 15, 36, 1) 40%,
+        rgba(8, 15, 36, 0.9) 70%,
+        transparent 100%);
     z-index: -1;
     pointer-events: none;
   }
@@ -4141,29 +4141,35 @@ a.lock-btn {
   }
 
 }
+
 /* FIXED USER AVATAR & TRIGGER */
 .user-trigger {
-  background: rgba(255, 255, 255, 0.05) !important; /* Clean subtle background */
+  background: rgba(255, 255, 255, 0.05) !important;
+  /* Clean subtle background */
   border: 1px solid rgba(255, 255, 255, 0.1) !important;
-  padding: 4px 12px 4px 4px !important; /* Tight padding */
+  padding: 4px 12px 4px 4px !important;
+  /* Tight padding */
   border-radius: 50px !important;
   display: flex !important;
   align-items: center !important;
   gap: 10px !important;
-  box-shadow: none !important; /* Remove any ghosty shadows */
+  box-shadow: none !important;
+  /* Remove any ghosty shadows */
 }
 
 /* Remove any pseudo-elements that might be causing the ghost circle */
-.user-trigger::before, .user-trigger::after {
+.user-trigger::before,
+.user-trigger::after {
   display: none !important;
 }
 
 .user-avatar-bubble {
   width: 32px !important;
   height: 32px !important;
-  background: linear-gradient(135deg, #f59e0b, #d97706) !important; /* Solid orange theme */
+  background: linear-gradient(135deg, #f59e0b, #d97706) !important;
+  /* Solid orange theme */
   border: none !important;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.2) !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2) !important;
   display: flex !important;
   align-items: center !important;
   justify-content: center !important;
@@ -4186,18 +4192,22 @@ a.lock-btn {
 }
 
 .user-avatar-bubble {
-  box-shadow: none !important; /* Remove shadow from the avatar itself too */
+  box-shadow: none !important;
+  /* Remove shadow from the avatar itself too */
 }
 
 /* MINIMALIST TEAM CHIPS FOR MOBILE */
 @media (max-width: 768px) {
   .av-team-card {
-    width: auto !important; /* Let it wrap the text */
+    width: auto !important;
+    /* Let it wrap the text */
     height: auto !important;
     padding: 6px 14px !important;
-    flex: 1; /* Allow them to grow evenly */
+    flex: 1;
+    /* Allow them to grow evenly */
     background: rgba(255, 255, 255, 0.05) !important;
-    border-radius: 50px !important; /* Pill shape */
+    border-radius: 50px !important;
+    /* Pill shape */
     display: flex !important;
     align-items: center !important;
     justify-content: center !important;
@@ -4205,7 +4215,8 @@ a.lock-btn {
   }
 
   .av-team-logo {
-    display: none !important; /* REMOVE LOGO AS REQUESTED */
+    display: none !important;
+    /* REMOVE LOGO AS REQUESTED */
   }
 
   .av-team-code {
@@ -4228,7 +4239,8 @@ a.lock-btn {
     height: auto !important;
     width: auto !important;
     min-width: 60px;
-    border-radius: 50px !important; /* Pill style */
+    border-radius: 50px !important;
+    /* Pill style */
     flex-direction: row !important;
     gap: 0 !important;
   }
@@ -4246,7 +4258,8 @@ a.lock-btn {
   display: flex;
   align-items: center;
   justify-content: center;
-  min-height: calc(100vh - 80px); /* Takes full height minus navbar */
+  min-height: calc(100vh - 80px);
+  /* Takes full height minus navbar */
   width: 100%;
   position: relative;
   z-index: 1000;
