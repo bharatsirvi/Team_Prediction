@@ -96,7 +96,7 @@ function SignInForm() {
     if (!res.ok) {
       setError(data.error || 'Invalid code.');
     } else {
-      router.push(redirect);
+      router.push('/');
       router.refresh();
     }
     setLoading(false);
