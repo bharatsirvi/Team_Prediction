@@ -1,7 +1,6 @@
 "use client";
 import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
-import { Navbar } from '@/components/Navbar';
 
 type Prediction = { id: number; username: string; teams: string[]; timestamp: string; };
 
@@ -61,7 +60,6 @@ export default function Dashboard() {
 
   return (
     <>
-      <Navbar />
       <main className="page-main">
         <div className="db-hero">
           <div className="hero-watermark">PICKS</div>

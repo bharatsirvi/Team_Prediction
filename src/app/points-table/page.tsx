@@ -1,7 +1,6 @@
 "use client";
 import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
-import { Navbar } from '@/components/Navbar';
 
 const TEAM_LOGOS: Record<string, string> = {
   CSK: "https://documents.iplt20.com/ipl/CSK/logos/Logooutline/CSKoutline.png",
@@ -56,7 +55,6 @@ export default function PointsTablePage() {
 
   return (
     <>
-      <Navbar />
 
       <main className="page-main">
         <div className="db-hero">

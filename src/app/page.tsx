@@ -2,7 +2,6 @@
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-import { Navbar } from '@/components/Navbar';
 
 const IPL_TEAMS = [
   { id: "CSK", name: "Chennai Super Kings", logo: "https://documents.iplt20.com/ipl/CSK/logos/Logooutline/CSKoutline.png", primary: "#f5c518", secondary: "#1a3b8c" },
@@ -107,7 +106,6 @@ export default function Home() {
 
   return (
     <>
-      <Navbar />
 
       <main className="page-main">
         <section className="hero">
