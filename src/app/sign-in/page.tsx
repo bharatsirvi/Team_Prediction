@@ -85,11 +85,11 @@ function SignInForm() {
     const res = await fetch('/api/auth/verify-otp', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ 
-        email: email.toLowerCase(), 
-        code, 
+      body: JSON.stringify({
+        email: email.toLowerCase(),
+        code,
         name: authMode === 'signup' ? name.trim() : '',
-        mode: authMode 
+        mode: authMode
       }),
     });
     const data = await res.json();
@@ -121,13 +121,13 @@ function SignInForm() {
         {step === 'email' ? (
           <>
             <div className="auth-tabs">
-              <button 
+              <button
                 className={`tab-btn ${authMode === 'signup' ? 'active' : ''}`}
                 onClick={() => { setAuthMode('signup'); setError(''); }}
               >
                 Sign Up
               </button>
-              <button 
+              <button
                 className={`tab-btn ${authMode === 'login' ? 'active' : ''}`}
                 onClick={() => { setAuthMode('login'); setError(''); }}
               >
@@ -139,8 +139,8 @@ function SignInForm() {
               {authMode === 'signup' ? 'Create Account' : 'Welcome Back'}
             </h1>
             <p className="signin-subheading">
-              {authMode === 'signup' 
-                ? 'Register your name and email to start predicting.' 
+              {authMode === 'signup'
+                ? 'Register your name and email to start predicting.'
                 : 'Enter your email to sign in to your account.'}
             </p>
 
@@ -215,9 +215,9 @@ function SignInForm() {
                 <div className="signin-error">⚠ Request a new code to continue.</div>
               )}
 
-              <button 
-                type="submit" 
-                className="signin-btn" 
+              <button
+                type="submit"
+                className="signin-btn"
                 disabled={loading || code.length < 6 || timer === 0}
               >
                 {loading ? <span className="signin-spinner" /> : '✓ Verify & Continue'}
@@ -234,7 +234,7 @@ function SignInForm() {
 
             <p className="signin-resend">
               Didn't get it?{' '}
-              <button className="signin-link-btn" onClick={() => handleSendOtp({ preventDefault: () => {} } as React.FormEvent)} disabled={loading}>
+              <button className="signin-link-btn" onClick={() => handleSendOtp({ preventDefault: () => { } } as React.FormEvent)} disabled={loading}>
                 Resend code
               </button>
             </p>

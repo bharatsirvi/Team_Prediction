@@ -135,10 +135,8 @@ export default function Home() {
                   if (!team) return null;
                   return (
                     <div key={teamId} className="av-team-chip" style={{ borderColor: `${TEAM_COLORS[teamId]}55` }}>
-                      <div className="hide-mobile">
-                        {/* eslint-disable-next-line @next/next/no-img-element */}
-                        <img src={team.logo} alt={team.name} className="av-team-logo" />
-                      </div>
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
+                      <img src={team.logo} alt={team.name} className="av-team-logo" />
                       <span className="av-team-code" style={{ color: TEAM_COLORS[teamId] }}>{teamId}</span>
                     </div>
                   );
@@ -162,10 +160,8 @@ export default function Home() {
                   if (!team) return null;
                   return (
                     <div key={teamId} className="av-team-chip" style={{ borderColor: `${TEAM_COLORS[teamId]}55` }}>
-                      <div className="hide-mobile">
-                        {/* eslint-disable-next-line @next/next/no-img-element */}
-                        <img src={team.logo} alt={team.name} className="av-team-logo" />
-                      </div>
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
+                      <img src={team.logo} alt={team.name} className="av-team-logo" />
                       <span className="av-team-code" style={{ color: TEAM_COLORS[teamId] }}>{teamId}</span>
                     </div>
                   );
